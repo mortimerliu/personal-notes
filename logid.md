@@ -90,5 +90,6 @@ devices: (
 
 ## Resources
 
-* [git repo]()
+* [git repo](https://github.com/PixlOne/logiops/tree/master/src/logid)
 * [how-to-use-logid](https://askubuntu.com/questions/1149310/logitech-mx-master-2s-via-bluetooth-change-pointer-speed/1246278#1246278)
+* [configuration wiki](https://github.com/PixlOne/logiops/wiki/Configuration)
