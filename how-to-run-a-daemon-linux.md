@@ -71,3 +71,4 @@ systemctl enable mydaemon.service
 * [proper-way-to-run-shell-script-as-a-daemon](https://unix.stackexchange.com/questions/426862/proper-way-to-run-shell-script-as-a-daemon)
 * [how-to-use-systemctl](https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units)
 * [auto-restart-crashed-service-systemd](https://singlebrook.com/2017/10/23/auto-restart-crashed-service-systemd/)
+* [init.d](https://superuser.com/questions/449805/init-d-script-not-running-on-startup)
