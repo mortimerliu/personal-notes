@@ -1,6 +1,6 @@
 # Kmonad
 
-## Kmonad configuration
+## Kmonad configuration for Linux
 
 ```
 #| --------------------------------------------------------------------------
@@ -79,3 +79,9 @@
   stc (tap-hold-next 400 lsft caps :timeout-button lsft)
 )
 ```
+
+## Resources
+
+* [kmonad for bluetooth keyboard](https://github.com/MaxGyver83/dotfiles/blob/master/scripts/bin/start-kmonad-for-all-keyboards.fish)
+* https://github.com/kmonad/kmonad/issues/384
+* https://github.com/kmonad/kmonad/blob/master/doc/quick-reference.md

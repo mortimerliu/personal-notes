@@ -2,8 +2,23 @@
 
 ## `/etc/logid.cfg`
 
+
+enable the service to run on system startup and start the service:
+
+```
+sudo systemctl enable logid
+sudo systemctl start logid
+```
+
+If ever change /etc/logid.cfg, for the changes to take effect you can run:
+
+```
+sudo systemctl restart logid
+```
+
 ```
 # this config file is for Logiops and needs to be placed in /etc/logid.cfg
+# name can be found by running `sudo logid`
 devices: (
 {
     name: "Wireless Mouse MX Master 2S";
@@ -87,6 +102,28 @@ devices: (
 }
 );
 ```
+
+## [scroll speed](https://github.com/PixlOne/logiops/issues/116)
+
+```
+hiresscroll:
+{
+    hires: true;
+    invert: false;
+    target: true;
+    up: {
+        mode: "Axis";
+        axis: "REL_WHEEL_HI_RES";
+        axis_multiplier: 1;
+    },
+    down: {
+        mode: "Axis";
+        axis: "REL_WHEEL_HI_RES";
+        axis_multiplier: -1;
+    },
+}
+```
+
 
 ## Resources
 
