@@ -48,8 +48,11 @@ An operator is a special symbol or phrase that you use to check, change, or comb
   (3, 1, "zebra") < (3, 2, "apple") // true
   ("blue", false) < ("purple", true)  // Error because < can't compare Boolean values
   ```
+
 - Logical Operators: `!a`, `a && b`, `a || b`
-  - 
+  - Swift has short-circuit evaluation for both `&&` and `||`.
+  - **Combining Logical Operators**: The Swift logical operators && and || are left-associative, meaning that compound expressions with multiple logical operators evaluate the leftmost subexpression first.
+  - **Explicit Parentheses**: It’s sometimes useful to include parentheses when they’re not strictly needed, to make the intention of a complex expression easier to read.
 
 ## Ternary Conditional Operator
 
