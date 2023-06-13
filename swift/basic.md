@@ -1,5 +1,7 @@
 # Swift - Basics<!-- omit from toc -->
 
+[Swift documentations](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/)
+
 - [Constants and Variables](#constants-and-variables)
   - [Type Annotations](#type-annotations)
   - [Naming Convention](#naming-convention)
