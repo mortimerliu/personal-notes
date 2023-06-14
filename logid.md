@@ -2,7 +2,6 @@
 
 ## `/etc/logid.cfg`
 
-
 enable the service to run on system startup and start the service:
 
 ```
@@ -123,7 +122,6 @@ hiresscroll:
         },
     };
 ```
-
 
 ## Resources
 
