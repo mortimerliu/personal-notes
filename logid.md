@@ -4,18 +4,18 @@
 
 enable the service to run on system startup and start the service:
 
-```
+```bash
 sudo systemctl enable logid
 sudo systemctl start logid
 ```
 
 If ever change /etc/logid.cfg, for the changes to take effect you can run:
 
-```
+```bash
 sudo systemctl restart logid
 ```
 
-```
+```conf
 # this config file is for Logiops and needs to be placed in /etc/logid.cfg
 # name can be found by running `sudo logid`
 devices: (
@@ -104,7 +104,7 @@ devices: (
 
 ## [scroll speed](https://github.com/PixlOne/logiops/issues/116)
 
-```
+```conf
 hiresscroll:
     {
         hires: true;
