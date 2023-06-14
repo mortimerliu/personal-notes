@@ -107,21 +107,21 @@ devices: (
 
 ```
 hiresscroll:
-{
-    hires: true;
-    invert: false;
-    target: true;
-    up: {
-        mode: "Axis";
-        axis: "REL_WHEEL_HI_RES";
-        axis_multiplier: 1;
-    },
-    down: {
-        mode: "Axis";
-        axis: "REL_WHEEL_HI_RES";
-        axis_multiplier: -1;
-    },
-}
+    {
+        hires: true;
+        invert: false;
+        target: false;
+        up: {
+            mode: "Axis";
+            axis: "REL_WHEEL_HI_RES";
+            axis_multiplier: 8;
+        },
+        down: {
+            mode: "Axis";
+            axis: "REL_WHEEL_HI_RES";
+            axis_multiplier: -8;
+        },
+    };
 ```
 
 
