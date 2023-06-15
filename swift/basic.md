@@ -1,6 +1,6 @@
 # Swift - Basics<!-- omit from toc -->
 
-[Swift documentations 1](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/)
+[Swift documentations 1](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/),
 [Swift documentations 2](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters)
 
 - [Constants and Variables](#constants-and-variables)
