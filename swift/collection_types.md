@@ -1,6 +1,6 @@
 # Swift - Collection Types
 
-[Swift documentations 1](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes)
+[Swift documentations](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes)
 
 - [Swift - Collection Types](#swift---collection-types)
   - [Summary](#summary)
