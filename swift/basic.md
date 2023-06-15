@@ -1,6 +1,7 @@
 # Swift - Basics<!-- omit from toc -->
 
-[Swift documentations](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/)
+[Swift documentations 1](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/)
+[Swift documentations 2](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters)
 
 - [Constants and Variables](#constants-and-variables)
   - [Type Annotations](#type-annotations)
@@ -12,6 +13,12 @@
   - [Floating-Point Numbers](#floating-point-numbers)
   - [Booleans](#booleans)
   - [Tuples](#tuples)
+  - [Strings](#strings)
+  - [Characters](#characters)
+- [Unicode](#unicode)
+  - [Unicode Scalar Values](#unicode-scalar-values)
+  - [Extended Grapheme Clusters](#extended-grapheme-clusters)
+  - [Unicode Representations of Strings](#unicode-representations-of-strings)
 - [Numeric Literals](#numeric-literals)
 - [Numeric Type Conversion](#numeric-type-conversion)
 - [Optionals](#optionals)
@@ -160,6 +167,303 @@ let (justTheStatusCode, _) = http404Error
 print("The status code is \(http404Error.0)") // indexing
 let http200Status = (statusCode: 200, description: "OK") // named tuple
 print("The status code is \(http200Status.statusCode)")
+```
+
+### Strings
+
+#### String Literals<!-- omit from toc -->
+
+- String literals can include the following special characters:
+  - The escaped special characters `\0` (null character), `\\` (backslash), `\t` (horizontal tab), `\n` (line feed), `\r` (carriage return), `\"` (double quotation mark) and `\'` (single quotation mark)
+  - An arbitrary Unicode scalar, written as `\u{n}`, where n is a 1–8 digit hexadecimal number with a value equal to a valid Unicode code point
+- Multiline string literals:
+  - The string must begin on the first line after the opening quotation marks (`"""`), and end on the line before the closing quotation marks, which means that neither of the strings `singleLineString` and `multipleString` start or end with a line break.
+  - If you want to use line breaks to make your source code easier to read, but you don’t want the line breaks to be part of the string’s value, write a backslash (`\`) at the end of those lines.
+  - A multiline string can be indented to match the surrounding code. The whitespace before the closing quotation marks (`"""`) tells Swift what whitespace to ignore before all of the other lines. However, if you write whitespace at the beginning of a line in addition to what’s before the closing quotation marks, that whitespace isn’t ignored.
+    ![linesWithIdndentation](../assets/multilineStringWhitespace~dark@2x.png)
+
+```swift
+var emptyString = "" // empty string literal
+var anotherEmptyString = String() // initializer syntax
+let someString = "Some string literal value"
+let quotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin,
+please your Majesty?" he asked.
+
+"Begin at the beginning," the King said gravely, "and go on
+till you come to the end; then stop."
+"""
+
+let singleLineString = "These are the same."
+let multilineString = """
+These are the same.
+"""
+
+let softWrappedQuotation = """
+The White Rabbit put on his spectacles.  "Where shall I begin, \
+please your Majesty?" he asked.
+
+"Begin at the beginning," the King said gravely, "and go on \
+till you come to the end; then stop."
+"""
+```
+
+#### Special Characters in String Literals<!-- omit from toc -->
+
+String literals can include the following special characters:
+
+- The escaped special characters `\0` (null character), `\\` (backslash), `\t` (horizontal tab), `\n` (line feed), `\r` (carriage return), `\"` (double quotation mark) and `\'` (single quotation mark)
+- An arbitrary Unicode scalar, written as `\u{n}`, where n is a 1–8 digit hexadecimal number with a value equal to a valid Unicode code point
+- To include the text """ in a multiline string, escape at least one of the quotation marks.
+
+```swift
+let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+// "Imageination is more important than knowledge" - Einstein
+let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+let threeDoubleQuotationMarks = """
+Escaping the first quotation mark \"""
+Escaping all three quotation marks \"\"\"
+"""
+```
+
+#### String Mutability<!-- omit from toc -->
+
+```swift
+var variableString = "Horse"
+variableString += " and carriage"
+
+let constantString = "Highlander"
+constantString += " and another Highlander" // compile-time error
+```
+
+#### String Are Value Types<!-- omit from toc -->
+
+Swift's `String` type is a *value* type. If you create a new `String` value, that `String` value is copied when it’s passed to a function or method, or when it’s assigned to a constant or variable. In each case, a new copy of the existing `String` value is created, and the new copy is passed or assigned, not the original version.
+
+#### Concatenating Strings and Characters<!-- omit from toc -->
+
+```swift
+let string1 = "hello"
+let string2 = " there"
+var welcome = string1 + string2
+// welcome now equals "hello there"
+var instruction = "look over"
+instruction += string2
+// instruction now equals "look over there"
+let exclamationMark: Character = "!"
+welcome.append(exclamationMark)
+// welcome now equals "hello there!"
+string1 + exclamationMark // compile-time error
+```
+
+#### String Interpolation<!-- omit from toc -->
+
+```swift
+let multiplier = 3
+let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+// message is "3 times 2.5 is 7.5"
+```
+
+#### Extended String Delimiters<!-- omit from toc -->
+
+You can place a string literal within extended delimiters to include special characters in a string without invoking their effect. You place your string within **quotation marks** (`"`) and surround that with **number signs** (`#`).
+
+If you need the special effects of a character in a string literal, match the number of number signs within the string literal following the escape character (`\`).
+
+```swift
+let threeMoreDoubleQuotationMarks = #"""
+Here are three more double quotes: """
+"""#
+print(#"Write an interpolated string in Swift using \(multiplier)."#)
+// Prints "Write an interpolated string in Swift using \(multiplier)."
+print(#"6 times 7 is \#(6 * 7)."#)
+// Prints "6 times 7 is 42."
+let lineBreaks = ###"Line1\###nLine2"###
+// Prints "Line1
+// Line2"
+```
+
+#### Counting Characters<!-- omit from toc -->
+
+Note that Swift’s use of extended grapheme clusters for Character values means that string concatenation and modification may not always affect a string’s character count.
+
+Because extended grapheme clusters can be composed of multiple Unicode scalars, characters in Swift don’t each take up the same amount of memory within a string’s representation. As a result, the number of characters in a string can’t be calculated without iterating through the string to determine its extended grapheme cluster boundaries. If you are working with particularly long string values, be aware that the count property must iterate over the Unicode scalars in the entire string in order to determine the characters for that string.
+
+```swift
+let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+print("unusualMenagerie has \(unusualMenagerie.count) characters")
+// Prints "unusualMenagerie has 40 characters"
+
+var word = "cafe"
+print("the number of characters in \(word) is \(word.count)")
+// Prints "the number of characters in cafe is 4"
+word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
+print("the number of characters in \(word) is \(word.count)")
+// Prints "the number of characters in café is 4"
+```
+
+#### Accessing and Modifying a String<!-- omit from toc -->
+
+Each `String` value has an associated *index type*, `String.Index`, which corresponds to the position of each `Character` in the string.
+
+- `startIndex`: the position of the first character in a nonempty string
+- `endIndex`: the position after the last character in a string
+  - `endIndex` isn’t a valid argument to a string’s subscript
+  - `startIndex` and `endIndex` are equal for an empty string
+- `index(before:)`: the previous index
+- `index(after:)`: the next index
+- `index(_:offsetBy:)`: the index offset by a specified distance
+- `indices`: a range of all of the indexes used to access individual characters in a string
+- `insert(_:at:)`: insert a character at a specified index
+- `insert(contentsOf:at:)`: insert a string at a specified index
+- `remove(at:)`: remove a character at a specified index
+- `removeSubrange(_:)`: remove a substring at a specified range
+- `removeAll()`: remove all characters
+
+```swift
+let greeting = "Guten Tag!"
+greeting[greeting.startIndex] // G
+greeting[greeting.index(before: greeting.endIndex)] // !
+greeting[greeting.index(after: greeting.startIndex)] // u
+let index = greeting.index(greeting.startIndex, offsetBy: 7)
+greeting[index] // a
+greeting[greeting.endIndex] // runtime error
+greeting.index(after: greeting.endIndex) // runtime error
+for index in greeting.indices {
+    print("\(greeting[index]) ", terminator: "")
+}
+// Prints "G u t e n   T a g ! "
+var welcome = "hello"
+welcome.insert("!", at: welcome.endIndex) // hello!
+welcome.insert(contentsOf: " there", at: welcome.index(before: welcome.endIndex)) // hello there!
+welcome.remove(at: welcome.index(before: welcome.endIndex)) // hello there
+let range = welcome.index(welcome.endIndex, offsetBy: -6)..<welcome.endIndex
+welcome.removeSubrange(range) // hello
+```
+
+#### Substrings<!-- omit from toc -->
+
+- Substrings in Swift have most of the same methods as strings.
+- The difference between strings and substrings is that, as a performance optimization, a substring can reuse part of the memory that’s used to store the original string, or part of the memory that’s used to store another substring.
+    ![stringSubstring](../assets/stringSubstring~dark@2x.png)
+- Substrings are used for only a short amount of time while performing actions on a string. When you’re ready to store the result for a longer time, you convert the substring to an instance of `String`.
+- Both `String` and `Substring` conform to the `StringProtocol` protocol, which means it’s often convenient for string-manipulation functions to accept a StringProtocol value. You can call such functions with either a String or Substring value.
+
+```swift
+let greeting = "Hello, world!"
+let index = greeting.firstIndex(of: ",") ?? greeting.endIndex
+let beginning = greeting[..<index] // Hello
+// Convert the result to a String for long-term storage.
+let newString = String(beginning)
+```
+
+#### Comparing Strings<!-- omit from toc -->
+
+Swift provides three ways to compare textual values: string and character equality, prefix equality, and suffix equality.
+
+- `==` and `!=` to compare two strings
+  - Two `String` values (or two `Character` values) are considered equal if their extended grapheme clusters are *canonically* equivalent. Extended grapheme clusters are canonically equivalent if they have the *same linguistic meaning and appearance*, even if they’re composed from different Unicode scalars behind the scenes.
+- `hasPrefix(_:)` and `hasSuffix(_:)` to check whether a string has a particular string prefix or suffix
+
+```swift
+let quotation = "We're a lot alike, you and I."
+let sameQuotation = "We're a lot alike, you and I."
+if quotation == sameQuotation {
+    print("These two strings are considered equal")
+}
+// Prints "These two strings are considered equal"
+
+let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
+let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+if eAcuteQuestion == combinedEAcuteQuestion {
+    print("These two strings are considered equal")
+}
+// Prints "These two strings are considered equal"
+
+let romeoAndJuliet = [
+    "Act 1 Scene 1: Verona, A public place",
+    "Act 1 Scene 2: Capulet's mansion",
+    "Act 1 Scene 3: A room in Capulet's mansion",
+    "Act 1 Scene 4: A street outside Capulet's mansion",
+    "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+    "Act 2 Scene 1: Outside Capulet's mansion",
+    "Act 2 Scene 2: Capulet's orchard",
+    "Act 2 Scene 3: Outside Friar Lawrence's cell",
+    "Act 2 Scene 4: A street in Verona",
+    "Act 2 Scene 5: Capulet's mansion",
+    "Act 2 Scene 6: Friar Lawrence's cell"
+]
+var act1SceneCount = 0
+for scene in romeoAndJuliet {
+    if scene.hasPrefix("Act 1 ") {
+        act1SceneCount += 1
+    }
+}
+```
+
+### Characters
+
+```swift
+let thisIsAString = "!"
+let exclamationMark: Character = "!"
+let catCharacters: [Character] = ["C", "a", "t", "!", "🐱"]
+let catString = String(catCharacters)
+print(catString)
+// Prints "Cat!🐱"
+```
+
+## Unicode
+
+Unicode is an international standard for encoding, representing, and processing text in different writing systems. It enables you to represent almost any character from any language in a standardized form, and to read and write those characters to and from an external source such as a text file or web page.
+
+### Unicode Scalar Values
+
+Behind the scenes, Swift’s native `String` type is built from Unicode scalar values. A Unicode scalar is a unique 21-bit number for a character or modifier, such as U+0061 for LATIN SMALL LETTER A (`"a"`), or U+1F425 for FRONT-FACING BABY CHICK (`"🐥"`).
+
+### Extended Grapheme Clusters
+
+Every instance of Swift’s `Character` type represents a single extended grapheme cluster. An extended grapheme cluster is a sequence of one or more Unicode scalars that (when combined) produce a single human-readable character.
+
+```swift
+let eAcute: Character = "\u{E9}" // é
+let combinedEAcute: Character = "\u{65}\u{301}" // e followed by ́
+// eAcute is é, combinedEAcute is é
+let precomposed: Character = "\u{D55C}" // 한
+let decomposed: Character = "\u{1112}\u{1161}\u{11AB}" // ᄒ, ᅡ, ᆫ
+// precomposed is 한, decomposed is 한
+let enclosedEAcute: Character = "\u{E9}\u{20DD}"
+// enclosedEAcute is é⃝
+let regionalIndicatorForUS: Character = "\u{1F1FA}\u{1F1F8}"
+// regionalIndicatorForUS is 🇺🇸
+```
+
+### Unicode Representations of Strings
+
+Swift provides several different ways to access Unicode representations of strings. You can iterate over the string with a `for`-`in` statement, to access its individual `Character` values as Unicode extended grapheme clusters.
+
+Alternatively, access a `String` value in one of three other Unicode-compliant representations:
+
+- A collection of UTF-8 code units (accessed with the string’s `utf8` property)
+- A collection of UTF-16 code units (accessed with the string’s `utf16` property)
+- A collection of 21-bit Unicode scalar values, equivalent to the string’s UTF-32 encoding form (accessed with the string’s `unicodeScalars` property)
+
+```swift
+let dogString = "Dog‼🐶"
+for codeUnit in dogString.utf8 {
+    print("\(codeUnit) ", terminator: "")
+}
+print("")
+// Prints "68 111 103 226 128 188 240 159 144 182 "
+for codeUnit in dogString.utf16 {
+    print("\(codeUnit) ", terminator: "")
+}
+print("")
+// Prints "68 111 103 8252 55357 56374 "
+for scalar in dogString.unicodeScalars {
+    print("\(scalar.value) ", terminator: "")
+}
+print("")
+// Prints "68 111 103 8252 128054 "
 ```
 
 ## Numeric Literals
