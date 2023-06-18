@@ -1,18 +1,52 @@
 # Kmonad
 
+KMonad is an advanced tool that lets you infinitely customize and extend the functionalities of almost any keyboard.
+
+[github](https://github.com/kmonad/kmonad)
+
+## Installation
+
+```bash
+curl -sSL https://get.haskellstack.org/ | sh # install stack
+
+cd ~/src
+git clone git@github.com:kmonad/kmonad.git
+cd kmonad
+stack build # build the project
+stack haddock # generate documentation
+stack install # install the project
+```
+
+## Permissions
+
+[FAQ](https://github.com/kmonad/kmonad/blob/master/doc/faq.md#q-how-do-i-get-uinput-permissions)
+
+```bash
+# create a group for uinput
+sudo groupadd uinput
+# add your user to the uinput and input group
+sudo usermod -aG uinput $USER
+sudo usermod -aG input $USER
+# create a udev rule to allow access to uinput
+echo "KERNEL==\"uinput\", MODE=\"0660\", GROUP=\"uinput\", OPTIONS+=\"static_node=uinput\"" | sudo tee /lib/udev/rules.d/99-uinput.rules
+# reload udev rules
+sudo modprobe uinput
+# reboot
+```
+
 ## Kmonad configuration for Linux
 
-```
-#| --------------------------------------------------------------------------
+```conf
+# | --------------------------------------------------------------------------
 
   Kmonad configuration that does the following:
   
-   * when Caps is pressed and held:
-     * i/k/j/l -> up/down/left/right
-     * h -> backspace
-     * w/s -> pageup/pagedown
-   * when lmet is pressed and held:
-     * add a num pad to right side of the keyboard
+* when Caps is pressed and held:
+  * i/k/j/l -> up/down/left/right
+  * h -> backspace
+  * w/s -> pageup/pagedown
+* when lmet is pressed and held:
+  * add a num pad to right side of the keyboard
 
   -------------------------------------------------------------------------- |#
 
@@ -59,17 +93,17 @@
 
 (deflayer caps-ikjl
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    pgup _    _    _    _    _    up   _    _    _    _    _
-  XX   _    pgdn _    _    _    bspc left down rght _    _    _
+  __    pgup __    __    _up_    __    __
+  XX   _pgdn_    __    bspc left down rght __    _
   _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _    _    _    _
 )
 
 (deflayer numbers
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    XX   /    7    8    9    -    _    _    _
-  _    _    _    _    _    XX   *    4    5    6    +    _    _
-  _    _    \(   \)   .    XX   0    1    2    3    _    _
+  __    __    _XX   /    7    8    9    -_    __
+  __    __    _XX   *    4    5    6    +_    _
+  _    _\(   \)   .    XX   0    1    2    3_    _
   _    _    _              _              _    _    _    _
 )
 
@@ -80,8 +114,38 @@
 )
 ```
 
+## Convinience scripts
+
+```bash
+#!/bin/bash
+
+log='~/.kmonad/kmonad-daemon-keychron-k2.log'
+
+now=$(date +"%Y-%m-%d %T")
+echo "Kmonad activation keychron-k2\nExecution time: $now" >> $log
+
+# keychron Keys
+kbd='/dev/input/by-id/usb-USB_Keychron_K2_USB_DEVICE-event-kbd'
+echo "Keychron K2 input event: "$kbd >> $log
+file_path='/tmp/keychron_k2_kmonad_config.kbd'
+if [ -e $kbd ]; 
+then
+    ~/anaconda3/bin/python \
+        ~/.kmonad/write_kmonad_config.py \
+        $file_path $kbd >> $log 2>&1
+    nohup kmonad $file_path >> $log 2>&1 &
+    echo "process id: $!"
+    echo "Kmonad for Keychron K2 activated"
+    echo "process id: $!" >> $log
+    echo "Kmonad for Keychron K2 activated" >> $log
+else
+    echo "Keychron K2 not found; skipped"
+    echo "Keychron K2 not found; skipped" >> $log
+fi
+```
+
 ## Resources
 
 * [kmonad for bluetooth keyboard](https://github.com/MaxGyver83/dotfiles/blob/master/scripts/bin/start-kmonad-for-all-keyboards.fish)
-* https://github.com/kmonad/kmonad/issues/384
-* https://github.com/kmonad/kmonad/blob/master/doc/quick-reference.md
+* <https://github.com/kmonad/kmonad/issues/384>
+* <https://github.com/kmonad/kmonad/blob/master/doc/quick-reference.md>
