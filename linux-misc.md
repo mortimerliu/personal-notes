@@ -7,9 +7,10 @@
     ```bash
     sudo apt install nvidia-driver-530
     sudo apt install git
-    sudo apt-get install ibus-libpinyin # for Chinese input
+    sudo apt-get install ibus-libpinyin # for Chinese input, reboot needed
     ```
 
+- git-config, see [here](git.md)
 - Java
 
     ```bash
