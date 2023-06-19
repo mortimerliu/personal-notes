@@ -66,6 +66,7 @@ someInts = [] // type is still [Int] because of type inference
 - `removeAll()` method to remove all of the items in the array
 - `removeAll(keepingCapacity:)` method to remove all of the items in the array, without clearing the memory that the array occupies
 - `enumerated()` method to iterate over the array, the method returns a tuple composed of an integer and the item
+- `first` property to access the first item in a nonempty array and returns an optional value
 
 ```swift
 var shoppingList = ["Eggs", "Milk"]
