@@ -1,21 +1,20 @@
-# Swift - Collection Types
+# Swift - Collection Types<!-- omit from toc -->
 
 [Swift documentations](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes)
 
-- [Swift - Collection Types](#swift---collection-types)
-  - [Summary](#summary)
-  - [Mutability of Collections](#mutability-of-collections)
-  - [Arrays](#arrays)
-    - [Creating Arrays](#creating-arrays)
-    - [Accessing and Modifying an Array](#accessing-and-modifying-an-array)
-  - [Sets](#sets)
-    - [Hash Values for Set Types](#hash-values-for-set-types)
-    - [Creating Sets](#creating-sets)
-    - [Accessing and Modifying a Set](#accessing-and-modifying-a-set)
-    - [Set Operations](#set-operations)
-  - [Dictionaries](#dictionaries)
-    - [Creating an Empty Dictionary](#creating-an-empty-dictionary)
-    - [Accessing and Modifying a Dictionary](#accessing-and-modifying-a-dictionary)
+- [Summary](#summary)
+- [Mutability of Collections](#mutability-of-collections)
+- [Arrays](#arrays)
+  - [Creating Arrays](#creating-arrays)
+  - [Accessing and Modifying an Array](#accessing-and-modifying-an-array)
+- [Sets](#sets)
+  - [Hash Values for Set Types](#hash-values-for-set-types)
+  - [Creating Sets](#creating-sets)
+  - [Accessing and Modifying a Set](#accessing-and-modifying-a-set)
+  - [Set Operations](#set-operations)
+- [Dictionaries](#dictionaries)
+  - [Creating an Empty Dictionary](#creating-an-empty-dictionary)
+  - [Accessing and Modifying a Dictionary](#accessing-and-modifying-a-dictionary)
 
 ## Summary
 

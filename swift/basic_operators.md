@@ -9,6 +9,7 @@
   - [Closed Range Operator](#closed-range-operator)
   - [Half-Open Range Operator](#half-open-range-operator)
   - [One-Sided Ranges](#one-sided-ranges)
+  - [Identity Operators](#identity-operators)
 
 An operator is a special symbol or phrase that you use to check, change, or combine values.
 
@@ -116,4 +117,40 @@ let range = ...5
 range.contains(7)   // false
 range.contains(4)   // true
 range.contains(-1)  // true
+```
+
+### Identity Operators
+
+The identity operators `===` and `!==` are used to test whether two object references both refer to the same object instance.
+
+Both operators can only be used with class instances.
+
+- Identical to (`===`)
+- Not identical to (`!==`)
+
+#### `===` vs `==`<!-- omit in toc -->
+
+- `===` checks if two instances refer to the same object
+- `==` checks if two instances are equal in value
+- if `===` is true, `==` is also true; the reverse is not true
+
+```swift
+class Person: Equatable {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        lhs.name == rhs.name
+    }
+}
+
+let p1 = Person(name: "John")
+let p2 = Person(name: "John")
+let p3 = p1
+p1 === p2 // false
+p1 == p2  // true
+
+p1 === p3 // true
+p1 == p3  // true
 ```

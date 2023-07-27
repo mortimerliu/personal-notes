@@ -2,6 +2,15 @@
 
 [Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures)
 
+- [Closure Expressions](#closure-expressions)
+- [Trailing Closures](#trailing-closures)
+- [Capturing Values](#capturing-values)
+  - [Nested Functions](#nested-functions)
+- [Closure are Reference Types](#closure-are-reference-types)
+- [Escaping Closures](#escaping-closures)
+- [Delaying Execution with a Closure](#delaying-execution-with-a-closure)
+- [Autoclosures](#autoclosures)
+
 *Closures* are self-contained blocks of functionality that can be passed around and used in your code. Closures can capture and store references to any constants and variables from the context in which they are defined. This is known as *closing over* those constants and variables. Swift handles all of the memory management of capturing for you.
 
 Closures take one of three forms:

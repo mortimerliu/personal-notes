@@ -25,6 +25,7 @@
   - [Forced Unwrapping](#forced-unwrapping)
   - [Optional Binding](#optional-binding)
   - [Implicitly Unwrapped Optionals](#implicitly-unwrapped-optionals)
+  - [Optional Chaining](#optional-chaining)
 - [Type Safety and Type Inference](#type-safety-and-type-inference)
 - [Error Handling](#error-handling)
 - [Assertions and Preconditions](#assertions-and-preconditions)
@@ -116,21 +117,21 @@ let minValue = Int.min
 let maxValue = Int.max
 ```
 
-| type | size | min | max | Java |
-| ---- | ---- | --- | --- | ---- |
-| `Int8` | 8 bits | -128 | 127 | byte |
-| `Int16` | 16 bits | -32768 | 32767 | long |
-| `Int32` | 32 bits | -2147483648 | 2147483647 | int |
+| type    | size    | min                  | max                 | Java |
+| ------- | ------- | -------------------- | ------------------- | ---- |
+| `Int8`  | 8 bits  | -128                 | 127                 | byte |
+| `Int16` | 16 bits | -32768               | 32767               | long |
+| `Int32` | 32 bits | -2147483648          | 2147483647          | int  |
 | `Int64` | 64 bits | -9223372036854775808 | 9223372036854775807 | long |
 
 #### Unsigned Intergers<!-- omit from toc -->
 
-| type | size | min | max | Java |
-| ---- | ---- | --- | --- | ---- |
-| `UInt8` | 8 bits | 0 | 255 | - |
-| `UInt16` | 16 bits | 0 | 65535 | - |
-| `UInt32` | 32 bits | 0 | 4294967295 | - |
-| `UInt64` | 64 bits | 0 | 18446744073709551615 | - |
+| type     | size    | min | max                  | Java |
+| -------- | ------- | --- | -------------------- | ---- |
+| `UInt8`  | 8 bits  | 0   | 255                  | -    |
+| `UInt16` | 16 bits | 0   | 65535                | -    |
+| `UInt32` | 32 bits | 0   | 4294967295           | -    |
+| `UInt64` | 64 bits | 0   | 18446744073709551615 | -    |
 
 #### Int and UInt<!-- omit from toc -->
 
@@ -597,6 +598,43 @@ When you use an implicitly unwrapped optional value, Swift first tries to use it
 ```swift
 let optionalString = assumedString
 // The type of optionalString is "String?" and assumedString isn't force-unwrapped.
+```
+
+### Optional Chaining
+
+- Optional Chaining is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil
+- If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil, the property, method, or subscript call returns nil
+- Place a question mark (`?`) after the optional value
+- The result of an optional chaining call is always an optional value of the type you are trying to retrieve, even if the property, method, or subscript you are querying returns a non-optional value
+  - Specifically, if a function doesn't return a value, it returns `Void`; then the result of the optional chaining call is `Void?`
+  - This is also applicable to setting a property and retrieve/set a value from a subscript through optional chaining which returns `Void?`
+- Optional chaining can be used in assignments, and if it fails, none of the code on the right hand side of the assignment operator is run
+
+```swift
+class Person {
+    var residence: Residence?
+}
+
+class Residence {
+    var rooms: [Room] = []
+    var numberOfRooms: Int {
+        rooms.count
+    }
+    subscript(i: Int) -> Room {
+        get {
+            rooms[i]
+        }
+        set {
+            rooms[i] = newValue
+        }
+    }
+    func printNumberOfRooms() {
+        print("The number of rooms is \(numberOfRooms)")
+    }
+}
+
+var person = Person()
+person.residence?.printNumberOfRooms() // return nil of type Void?
 ```
 
 ## Type Safety and Type Inference
